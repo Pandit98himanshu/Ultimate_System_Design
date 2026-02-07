@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>TinyURL</title>
+	<style>
+		body{font-family:Arial,Helvetica,sans-serif;max-width:720px;margin:40px auto;padding:0 16px}
+		h1{font-size:24px;margin-bottom:8px;text-align: center}
+		label{display:block;margin-top:12px;font-weight:600}
+		.inputRow{display:flex;gap:8px;align-items:center;margin-top:6px}
+		.inputRow input[type=text]{flex:1;width:auto}
+		input[type=text]{width:100%;padding:8px;font-size:14px;border:1px solid #ccc;border-radius:4px}
+		button{padding:8px 16px;font-size:14px;border-radius:4px;border:0;background:#1976d2;color:#fff;cursor:pointer}
+		.note{color:#666;margin-top:8px;font-size:13px}
+	</style>
+</head>
+<body>
+	<h1>TinyURL</h1>
+	<label for="longUrl">URL</label>
+	<div class="inputRow">
+		<input id="longUrl" type="text" placeholder="https://example.com/very/long/path" />
+		<button id="shortenBtn">Shorten</button>
+	</div>
+
+	<label for="shortUrl">Short URL</label>
+	<input id="shortUrl" type="text" readonly placeholder="Short URL will appear here" />
+
+	<script>
+		const btn = document.getElementById('shortenBtn');
+		const longInput = document.getElementById('longUrl');
+		const shortInput = document.getElementById('shortUrl');
+
+		btn.addEventListener('click', async () => {
+			const longUrl = longInput.value.trim();
+			if (!longUrl) { alert('Please enter a long URL'); return; }
+
+			try {
+			const resp = await fetch('/api/shorten', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: 'longUrl=' + encodeURIComponent(longUrl)
+			});
+
+			if (!resp.ok) {
+				const txt = await resp.text();
+				alert('Error: ' + (txt || resp.statusText));
+				return;
+			}
+
+			const tiny = await resp.text();
+			shortInput.value = tiny;
+		} catch (err) {
+			alert('Request failed: ' + err.message);
+		}
+		});
+
+	</script>
+</body>
+</html>
