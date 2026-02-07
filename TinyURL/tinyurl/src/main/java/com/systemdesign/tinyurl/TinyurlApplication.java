@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.systemdesign.tinyurl.service.TinyUrlService;
 
 @SpringBootApplication
-public class TinyurlApplication {
+public class TinyUrlApplication {
 
 	TinyUrlService service;
 	public static void main(String[] args) {
-		SpringApplication.run(TinyurlApplication.class, args);
+		SpringApplication.run(TinyUrlApplication.class, args);
 	}
 
 	public void run(String...args) {
