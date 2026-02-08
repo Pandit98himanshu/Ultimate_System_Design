@@ -1,10 +1,10 @@
-package com.systemdesign.tinyurl;
+package com.shorturl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TinyUrlApplicationTests {
+class ShorturlApplicationTests {
 
 	@Test
 	void contextLoads() {
