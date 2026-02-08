@@ -37,7 +37,7 @@ public class ShortUrlGeneratorService {
 			}
 			urls.add(sb.toString());
 		}
-		System.out.println(urls);
+
 		return new ShortUrlList(urls);
 	}
 }
