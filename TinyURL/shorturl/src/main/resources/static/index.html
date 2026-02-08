@@ -78,7 +78,7 @@
 	<input id="shortUrlUser" type="text" placeholder="https://shorturl.com/unique_short_code" />
 	<button id="expandBtn">Expand</button>
 
-	<label for="originaUrl">Short URL</label>
+	<label for="originalUrl">Original URL</label>
 	<input id="originalUrl" type="text" readonly placeholder="Original URL will appear here" />
 
 	<script>
@@ -87,7 +87,7 @@
 		const longInput = document.getElementById('longUrlUser');
 		const shortOutput = document.getElementById('shortUrl');
 		const shortInput = document.getElementById('shortUrlUser');
-		const longOutput = document.getElementById('originaUrl');
+		const longOutput = document.getElementById('originalUrl');
 
 		shortenBtn.addEventListener('click', async () => {
 			const longUrl = longInput.value.trim();
@@ -113,13 +113,14 @@
 		}
 		});
 
-		elongateBtn.addEventListener('click', async () => {
+		expandBtn.addEventListener('click', async () => {
 			const shortUrl = shortInput.value.trim();
-			if (!shortUrl) { alert('Please enter a long URL'); return; }
+			if (!shortUrl) { alert('Please enter a short URL'); return; }
 
 			try {
 			const resp = await fetch('/expand', {
-				method: 'GET',
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: 'shortUrl=' + encodeURIComponent(shortUrl)
 			});
 

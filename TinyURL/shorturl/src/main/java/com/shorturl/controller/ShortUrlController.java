@@ -2,16 +2,15 @@ package com.shorturl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.shorturl.model.UrlResponse;
 import com.shorturl.service.ShortUrlService;
 
 
-@Controller
+@RestController
 public class ShortUrlController {
 	@Autowired
 	ShortUrlService shortUrlService;
@@ -22,9 +21,9 @@ public class ShortUrlController {
 		return rsp.url();
 	}
 
-	@GetMapping("/expand")
+	@PostMapping(value = "/expand", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getLongUrl(@RequestParam("shortUrl") String shortUrl) {
-		UrlResponse rsp = shortUrlService.convertToLongUrl(shortUrl);
+		UrlResponse rsp = shortUrlService.convertToOriginalUrl(shortUrl);
 		// return ResponseEntity.status(HttpStatus.CREATED).body(rsp.url());
 		return rsp.url();
 	}

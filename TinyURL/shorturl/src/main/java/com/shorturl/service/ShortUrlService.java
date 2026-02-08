@@ -9,7 +9,7 @@ public class ShortUrlService {
 	public UrlResponse convertToShortUrl(String longUrl) {
 		return new UrlResponse(longUrl);
 	}
-	public UrlResponse convertToLongUrl(String shortUrl) {
+	public UrlResponse convertToOriginalUrl(String shortUrl) {
 		return new UrlResponse(shortUrl);
 	}
 }
