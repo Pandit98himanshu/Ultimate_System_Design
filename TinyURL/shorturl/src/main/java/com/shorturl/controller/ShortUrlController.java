@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shorturl.model.UrlResponse;
 import com.shorturl.service.ShortUrlService;
 
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
-
 @RestController
 public class ShortUrlController {
 	@Autowired
@@ -26,9 +23,8 @@ public class ShortUrlController {
 	}
 
 	@PostMapping(value = "/expand", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public String getLongUrl(@RequestParam("shortUrl") String shortUrl) {
+	public ResponseEntity<String> getLongUrl(@RequestParam("shortUrl") String shortUrl) {
 		UrlResponse rsp = shortUrlService.convertToOriginalUrl(shortUrl);
-		// return ResponseEntity.status(HttpStatus.CREATED).body(rsp.url());
-		return rsp.url();
+		return ResponseEntity.status(HttpStatus.FOUND).body(rsp.url());
 	}
 }
