@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "app.shorturl.prefix-uri",
+    "type": "java.lang.String",
+    "description": "Prefix URI = protocol + domain"
+  },
+  {
+    "name": "app.shorturl.buffer-length",
+    "type": "java.lang.Integer",
+    "description": "Maximum length for storing short codes into buffer queue"
+  },
+  {
+    "name": "app.shorturl.buffer-min-threshold",
+    "type": "java.lang.Integer",
+    "description": "Length for fetching next set of short codes into buffer queue"
+  },
+  {
+    "name": "app.shorturl.short-code-length",
+    "type": "java.lang.Integer",
+    "description": "Length of short code for short-url"
+  }
+]}

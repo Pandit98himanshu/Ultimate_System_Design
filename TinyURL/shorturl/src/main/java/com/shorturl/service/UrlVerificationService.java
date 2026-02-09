@@ -1,14 +1,15 @@
 package com.shorturl.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.InvalidUrlException;
 
 @Component
 public class UrlVerificationService {
-	@Autowired
-	private ShortUrlService shortUrlService;
-	private final int SHORT_CODE_LENGTH = 8;
+	@Value("${app.shorturl.prefix-uri}")
+	public String PREFIX_URI;
+	@Value("${app.shorturl.short-code-length}")
+	private int SHORT_CODE_LENGTH;
 
 	/*
 		URL structure = protocol://domain/path
@@ -25,7 +26,7 @@ public class UrlVerificationService {
 		int domainIndex = url.indexOf('/');
 		String domain = url.substring(0, domainIndex);
 		String path = url.substring(domainIndex + 1);
-		if (domain.equals(shortUrlService.PREFIX_URI)) {
+		if (domain.equals(PREFIX_URI)) {
 			if (path.length() != SHORT_CODE_LENGTH)
 				throw new InvalidUrlException("The short URL is invalid!");
 		}
