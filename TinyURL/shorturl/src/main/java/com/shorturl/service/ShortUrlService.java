@@ -17,6 +17,7 @@ public class ShortUrlService {
 	private final String GENERATOR_URI = "http://localhost:8085/generate/{qty}";
 	private final String PREFIX_URI = "http://shorturl.com/";
 	private final int SHORT_CODE_LENGTH = 8;
+	private final String INVALID_URL = "Invalid Url";
 	private final int SHORT_CODE_BUFFER_MIN_THREASHOLD = 3;
 	private final int SHORT_CODE_BUFFER_LENGTH = 10;
 	private final RestTemplate restTemplate = new RestTemplate();
@@ -34,10 +35,14 @@ public class ShortUrlService {
 	}
 
 	public UrlResponse convertToOriginalUrl(String shortUrl) {
+		String longUrl;
 		String shortCode = getCodeFromUrl(shortUrl);
-
-		UrlMap retv = urlMapRepo.findById(shortCode).get();
-		String longUrl = (retv != null) ? retv.getOriginalUrl() : "No Data!";
+		if (shortCode.equals(INVALID_URL)) {
+			longUrl = INVALID_URL;
+		} else {
+			UrlMap retv = urlMapRepo.findById(shortCode).get();
+			longUrl = (retv != null) ? retv.getOriginalUrl() : "No Data!";
+		}
 		return new UrlResponse(longUrl);
 	}
 
@@ -53,7 +58,7 @@ public class ShortUrlService {
 		String[] temp = shortUrl.split("/");
 		String shortCode = temp[temp.length - 1];
 		if(shortCode == null || shortCode.length() != SHORT_CODE_LENGTH) {
-			shortCode = "Invalid Short Url";
+			shortCode = INVALID_URL;
 		}
 		return shortCode;
 	}
