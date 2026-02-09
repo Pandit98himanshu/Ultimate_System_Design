@@ -25,6 +25,6 @@ public class ShortUrlController {
 	@PostMapping(value = "/expand", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getLongUrl(@RequestParam("shortUrl") String shortUrl) {
 		UrlResponse rsp = shortUrlService.convertToOriginalUrl(shortUrl);
-		return ResponseEntity.status(HttpStatus.FOUND).body(rsp.url());
+		return ResponseEntity.status(HttpStatus.OK).body(rsp.url());
 	}
 }
