@@ -19,12 +19,18 @@ public class ShortUrlController {
 	@PostMapping(value = "/shorten", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getShortUrl(@RequestParam("longUrl") String longUrl) {
 		UrlResponse rsp = shortUrlService.convertToShortUrl(longUrl);
-		return ResponseEntity.status(HttpStatus.CREATED).body(rsp.url());
+		if (rsp.isValid()) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(rsp.url());
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(rsp.url());
 	}
 
 	@PostMapping(value = "/expand", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> getLongUrl(@RequestParam("shortUrl") String shortUrl) {
 		UrlResponse rsp = shortUrlService.convertToOriginalUrl(shortUrl);
-		return ResponseEntity.status(HttpStatus.OK).body(rsp.url());
+		if (rsp.isValid()) {
+			return ResponseEntity.status(HttpStatus.OK).body(rsp.url());
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(rsp.url());
 	}
 }

@@ -1,5 +1,5 @@
 package com.shorturl.model;
 
-public record UrlResponse (String url) {
+public record UrlResponse (boolean isValid, String url) {
 	
 }
